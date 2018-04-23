@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::API
+  include ActionController::Serialization
   include AuthValidation
   before_action :check_token
+  AuthValidation.public_access :application => [:login]
 
   def check_token
     result = validate_token
@@ -19,7 +21,8 @@ class ApplicationController < ActionController::API
 
     # Create a new session
     token = generateUserSession(user)
-    render json: {:token => token, :role => getCurrentRole.role_id}, status: :ok
+    setCurrentUser( user)
+    render json: {user: UserSerializer.new(user) , token: token}, status: :ok
   end
 
   def logout

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180421233717) do
+ActiveRecord::Schema.define(version: 20180422011606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(version: 20180421233717) do
 
   create_table "companies", force: :cascade do |t|
     t.string   "name",       null: false
-    t.binary   "logo",       null: false
-    t.string   "mime_type",  null: false
-    t.string   "logo_name",  null: false
+    t.binary   "logo"
+    t.string   "mime_type"
+    t.string   "logo_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -59,9 +59,9 @@ ActiveRecord::Schema.define(version: 20180421233717) do
 
   create_table "default_platforms", force: :cascade do |t|
     t.string   "name",       null: false
-    t.binary   "logo",       null: false
-    t.string   "mime_type",  null: false
-    t.string   "logo_name",  null: false
+    t.binary   "logo"
+    t.string   "mime_type"
+    t.string   "logo_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -147,18 +147,18 @@ ActiveRecord::Schema.define(version: 20180421233717) do
 
   create_table "platforms", force: :cascade do |t|
     t.string   "name",                null: false
-    t.binary   "logo",                null: false
-    t.string   "mime_type",           null: false
-    t.string   "logo_name",           null: false
+    t.binary   "logo"
+    t.string   "mime_type"
+    t.string   "logo_name"
     t.integer  "company_id",          null: false
     t.integer  "default_platform_id"
-    t.float    "accordance",          null: false
+    t.float    "accordance"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
   end
 
   create_table "roles", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -173,14 +173,23 @@ ActiveRecord::Schema.define(version: 20180421233717) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "sessions", force: :cascade do |t|
+    t.string   "token"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name",       null: false
     t.string   "email",      null: false
-    t.string   "password",   null: false
+    t.binary   "password",   null: false
     t.integer  "role_id",    null: false
     t.integer  "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "sessions", "users"
 end

@@ -16,7 +16,8 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-
+    digest_password = User.digest_password(params[:password])
+    @user.password = digest_password
     if @user.save
       render json: @user, status: :created, location: @user
     else

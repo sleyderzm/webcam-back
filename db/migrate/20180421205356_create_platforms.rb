@@ -7,7 +7,7 @@ class CreatePlatforms < ActiveRecord::Migration[5.0]
       t.string :logo_name, null: false
       t.integer :company_id, null: false
       t.integer :default_platform_id
-      t.float :accordance, null: false
+      t.float :accordance, null: true
 
       t.timestamps
     end

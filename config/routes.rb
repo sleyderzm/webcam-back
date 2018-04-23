@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+
+  post '/login', to: 'application#login'
+
   resources :loan_payments
   resources :loans
   resources :platform_gains
